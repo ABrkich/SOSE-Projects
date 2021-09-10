@@ -7,11 +7,16 @@ import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.List;
 
 public class DomParser {
 
-  public static List<Employee> getParserResult() {
+  Integer authorId;
+  Integer did;
+  HashMap authors;
+  public List<Inproceedings> getInproceedings() {
     try {
       // Get the DOM Builder Factory
       DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -19,51 +24,84 @@ public class DomParser {
       DocumentBuilder builder = factory.newDocumentBuilder();
       // Load and Parse the XML document
       // document contains the complete XML as a Tree
-      Document document = builder.parse(ClassLoader.getSystemResourceAsStream("Employee.xml"));
+      Document document = builder.parse(ClassLoader.getSystemResourceAsStream("dblp-soc-papers.xml"));
       // Iterating through the nodes and extracting the data
-      NodeList nodeList = document.getDocumentElement().getChildNodes();
-      List<Employee> empList = new ArrayList<Employee>();
+      NodeList nodeList = document.getDocumentElement().getElementsByTagName("inproceedings");
+      List<Inproceedings> inpList = new ArrayList<Inproceedings>();
       for (int i = 0; i < nodeList.getLength(); i++) {
+        List<Author> authList = new ArrayList<Author>();
+        List<String> eeList = new ArrayList<String>();
         Node node = nodeList.item(i);
         if (node instanceof Element) {
           // We have encountered an <employee> tag
-          Employee emp = new Employee();
-          emp.id = node.getAttributes().getNamedItem("id").getNodeValue();
+          Inproceedings inp = new Inproceedings();
+          inp.did = this.did.toString();
+          this.did++;
           NodeList childNodes = node.getChildNodes();
           for (int j = 0; j < childNodes.getLength(); j++) {
             Node cNode = childNodes.item(j);
             // Identifying the child tag of employee encountered
             if (cNode instanceof Element) {
-              String content = cNode.getLastChild().getTextContent().trim();
+              String content = cNode.getLastChild().getTextContent().trim().replace("'","");
               switch (cNode.getNodeName()) {
-                case "firstName":
-                  emp.firstName = content;
+                case "author":
+                  Author a = new Author();
+                  String name = content;
+                  a.name = name;
+                  if(this.authors.containsKey(name)){
+                    a.aid = this.authors.get(name).toString();
+
+                }
+                  else{
+                    a.aid = this.authorId.toString();
+                    authors.put(name,this.authorId);
+
+                    this.authorId++;
+                  }
+
+                  authList.add(a);
                   break;
-                case "lastName":
-                  emp.lastName = content;
+                case "title":
+                  inp.title = content;
                   break;
-                case "location":
-                  emp.location = content;
+                case "pages":
+                  inp.pages = content;
+                  break;
+                case "year":
+                  inp.year = content;
+                  break;
+                case "booktitle":
+                  inp.booktitle = content;
+                  break;
+                case "crossref":
+                  inp.crossRef = content;
+                  break;
+                case "url":
+                  inp.url = content;
+                  break;
+                case "ee":
+                  eeList.add(content);
                   break;
               }
             }
           }
-          empList.add(emp);
+          inp.authors = authList;
+          inp.ee = eeList;
+          inpList.add(inp);
         }
       }
+
+
       // Print the Employee list
-      for (Employee e : empList) {
-        System.out.println(e);
-      }
-      return empList;
+
+      return inpList;
     } catch (Exception e) {
       e.printStackTrace();
     }
     return null;
   }
 
-
-  public static void main(String[] args) {
+  public List<Proceedings> getProceedings() {
     try {
       // Get the DOM Builder Factory
       DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -71,44 +109,141 @@ public class DomParser {
       DocumentBuilder builder = factory.newDocumentBuilder();
       // Load and Parse the XML document
       // document contains the complete XML as a Tree
-      Document document = builder.parse(ClassLoader.getSystemResourceAsStream("Employee.xml"));
+      Document document = builder.parse(ClassLoader.getSystemResourceAsStream("dblp-soc-papers.xml"));
       // Iterating through the nodes and extracting the data
-      NodeList nodeList = document.getDocumentElement().getChildNodes();
-      List<Employee> empList = new ArrayList<Employee>();
+      NodeList nodeList = document.getDocumentElement().getElementsByTagName("proceedings");
+      List<Proceedings> procList = new ArrayList<Proceedings>();
       for (int i = 0; i < nodeList.getLength(); i++) {
         Node node = nodeList.item(i);
         if (node instanceof Element) {
           // We have encountered an <employee> tag
-          Employee emp = new Employee();
-          emp.id = node.getAttributes().getNamedItem("id").getNodeValue();
+          Proceedings proc = new Proceedings();
+          proc.did = this.did.toString();
+          this.did++;
           NodeList childNodes = node.getChildNodes();
           for (int j = 0; j < childNodes.getLength(); j++) {
             Node cNode = childNodes.item(j);
             // Identifying the child tag of employee encountered
             if (cNode instanceof Element) {
-              String content = cNode.getLastChild().getTextContent().trim();
+              String content = cNode.getLastChild().getTextContent().trim().replace("'","");
               switch (cNode.getNodeName()) {
-                case "firstName":
-                  emp.firstName = content;
+                case "title":
+                  proc.title = content;
                   break;
-                case "lastName":
-                  emp.lastName = content;
+                case "isbn":
+                  proc.isbn = content;
                   break;
-                case "location":
-                  emp.location = content;
+                case "year":
+                  proc.year = content;
+                  break;
+                case "booktitle":
+                  proc.booktitle = content;
+                  break;
+                case "publisher":
+                  proc.publisher = content;
+                  break;
+                case "url":
+                  proc.url = content;
                   break;
               }
             }
           }
-          empList.add(emp);
+          procList.add(proc);
         }
       }
-      // Print the Employee list
-      for (Employee e : empList) {
-        System.out.println(e);
-      }
+      return procList;
     } catch (Exception e) {
       e.printStackTrace();
     }
+    return null;
   }
+
+  public List<Article> getArticles() {
+    try {
+      // Get the DOM Builder Factory
+      DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+      // Get the DOM Builder
+      DocumentBuilder builder = factory.newDocumentBuilder();
+      // Load and Parse the XML document
+      // document contains the complete XML as a Tree
+      Document document = builder.parse(ClassLoader.getSystemResourceAsStream("dblp-soc-papers.xml"));
+      // Iterating through the nodes and extracting the data
+      NodeList nodeList = document.getDocumentElement().getElementsByTagName("article");
+      List<Article> artList = new ArrayList<Article>();
+      for (int i = 0; i < nodeList.getLength(); i++) {
+        List<Author> authList = new ArrayList<Author>();
+        List<String> eeList = new ArrayList<String>();
+        Node node = nodeList.item(i);
+        if (node instanceof Element) {
+          // We have encountered an <employee> tag
+          Article art = new Article();
+          art.did = this.did.toString();
+          this.did++;
+          NodeList childNodes = node.getChildNodes();
+          for (int j = 0; j < childNodes.getLength(); j++) {
+            Node cNode = childNodes.item(j);
+            // Identifying the child tag of employee encountered
+            if (cNode instanceof Element) {
+              String content = cNode.getLastChild().getTextContent().trim().replace("'","");
+              switch (cNode.getNodeName()) {
+                case "author":
+                  Author a = new Author();
+                  String name = content;
+                  a.name = name;
+                  if(this.authors.containsKey(name)){
+                    a.aid = this.authors.get(name).toString();
+
+                  }
+                  else{
+                    a.aid = this.authorId.toString();
+                    authors.put(name,this.authorId);
+
+                    this.authorId++;
+                  }
+
+                  authList.add(a);
+                  break;
+                case "title":
+                  art.title = content;
+                  break;
+                case "pages":
+                  art.pages = content;
+                  break;
+                case "year":
+                  art.year = content;
+                  break;
+                case "journal":
+                  art.journal = content;
+                  break;
+                case "volume":
+                  art.volume = content;
+                  break;
+                case "number":
+                  art.number = content;
+                  break;
+                case "url":
+                  art.url = content;
+                  break;
+                case "ee":
+                  eeList.add(content);
+                  break;
+              }
+            }
+          }
+          art.authors = authList;
+          art.ee = eeList;
+          artList.add(art);
+        }
+      }
+
+
+      // Print the Employee list
+
+      return artList;
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
 }
