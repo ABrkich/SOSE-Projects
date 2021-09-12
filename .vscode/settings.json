@@ -1,0 +1,13 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "XMLParse/lib/jline-2.14.6.jar",
+        "XMLParse/lib/mysql-connector-java-8.0.26.jar",
+        "XMLParse/lib/saxon-he-10.5.jar",
+        "XMLParse/lib/saxon-he-test-10.5.jar",
+        "XMLParse/lib/saxon-xqj-10.5.jar",
+        "XMLParse/lib/saxon9-test.jar",
+        "XMLParse/lib/saxon9-xqj.jar",
+        "XMLParse/lib/saxon9he.jar"
+    ]
+}

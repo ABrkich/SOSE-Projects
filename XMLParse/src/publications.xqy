@@ -1,9 +1,9 @@
 (:query 1:)
-(:
+
 for $x in doc("dblp-soc-papers.xml")/dblp/article
 where fn:contains($x/title, 'Software Engineering')
 return $x/title
-:)
+
 
 (:query 2:)
 (:
@@ -15,26 +15,17 @@ return $x/title
 
 (:query 3:)
 (:loop through all dblp, where author occurences >10 :)
-
-(: loop through all articles, make an array of author counts, then do
- return author counts where count > 10 where title 'SOSE':)
-
-let $f2 := "hi"
-(: let $f3 :=  fn:string-join(($sequence, "hello mom"), " ") :)
-(: return $f3 :)
-
-for $x in doc("dblp-soc-papers.xml")/dblp/inproceedings
-let $c := fn:concat($f2, $x/author)
-let $f2 := fn:string-join(($f2, $x/author), " ")
-return $f2
-
-
 (:
 for $x in doc("dblp-soc-papers.xml")/dblp/inproceedings
-where fn:contains($x/title, 'Software Engineering')
-return $x/author
+let $count := 0
+let $auth := $x/author
+for $z in doc("dblp-soc-papers.xml")/dblp/inproceedings/author
+where $auth = $z
+let $count := $count + 1
+return if ($count > 9)
+then $auth
+else ()
 :)
-
 
 
 (:query 4:)
