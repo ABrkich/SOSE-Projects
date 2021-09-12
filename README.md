@@ -37,7 +37,8 @@ An example of each of these functions running are on lines 153-156 of DatabaseQu
 
 
 # XQuerying the XML
-put things here
+The relative filepaths of the Xqueries assume the fact you import the XMLParse project folder
+into your environment, NOT the entire SOSE_Projects folder.
 
 The 4 Xqueries can be found in publication.xqy and are called by running XQueryTester.java
 
