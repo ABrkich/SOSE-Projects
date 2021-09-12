@@ -157,8 +157,8 @@ public class DatabaseQueries {
                 System.out.println("Failed to make connection!");
             }
             Statement state = conn.createStatement();
-            getCoauthors("Athman Bouguettaya",state);
-            getPaperMetadata("Long-Term QoS-Aware Cloud Service Composition Using Multivariate Time Series Analysis.", state);
+            getCoauthors("Athman Bouguettaya",conn);
+            getPaperMetadata("Long-Term QoS-Aware Cloud Service Composition Using Multivariate Time Series Analysis.", conn);
             getJournalMetadata("IEEE Trans. Services Computing", "2016","9", "3", conn);
             getConferenceMetadata("ICWS","2005", conn);
 

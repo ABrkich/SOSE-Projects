@@ -39,5 +39,28 @@ An example of each of these functions running are on lines 153-156 of DatabaseQu
 # XQuerying the XML
 put things here
 
+The 4 Xqueries can be found in publication.xqy and are called by running XQueryTester.java
+
+Running XQueryTester.java only runs one specific query, and the other 3 are commented out. You will need to comment out the query you ran and uncomment out the next one you want to run.
+
+For some of the queries, we look for $x in dblp/article or dblp/inproceedings. This will return the result for the query in that subsection of the dblp.
+If you want to run the query on all publications (articles AND inproceedings AND etc) simply just change the route on the query in the for statement and rerun it
+ex: for $x in doc("dblp-soc-papers.xml")/dblp/inproceedings
+Change to /dblp/article to run on articles instead of inproceedings
+etc.
+
+Query 1:
+We did not find any titles that strictly had the letters "SOSE" in them, so we ran our subject queries on "Software Engineering" instead. 
+You can easily change this 
+ex: where fn:contains($x/title, 'Software Engineering')
+Change 'Softare Engineering' to whatever you want to compare
+
+Query 2: Per seen above, to view all articles published by Jia Zhang in 2018, change the article route to inproceedings or vice versa.
+
+Query 3: We did not find any authors with > 10 publications, however this may be due to our query being faulty.
+
+Query 4: We declared a global variable $papername, you may change this to whatever paper name you want to run the query on (case sensitve, must be exact)
+
+
 
 
