@@ -19,48 +19,15 @@ CREATE TABLE PapersToAuthors( paper_id int, author_id int, foreign KEY(paper_id)
 
 After creating those three tables you can run DatabaseSubmission.java file located in the "XMLParser/src" sub folder. 
 
-**As a Note there are temp usernames and passwords saved for the purposed of testing located on Line 16 of DatabaseSubmission.java and Line 146 of DatabaseQueries.java which may need to be changed for your connection
+**As a Note there are temp usernames and passwords saved for the purposed of testing located on Line 16 of DatabaseSubmission.java and Line 146 of DatabaseQueries.java which may need to be changed for your connection**
 
-# Java Querying the MySql Database
+# Running the GUI
 
-As mentioned above these 4 queries are done in the DatabaseQueries.java file.
+The GUI is located in the Java Class Gui.java. Running this will open a GUI with a large blank white space. At the top there are two menus. The left most menu is the Query menu which has all of the Queries for a given mode. Selecting a query will create a form on the bottom to fillout with the appropriate information. Clicking the send button will take the information from the form and send it to the selected query function which will call the SQL server. The output from the query will be posted on the GUI's large white space. 
 
-Each of these Queries uses it's own dedicated funtion which takes in the requesit variables and outputs the SQL response to the java terminal. 
+In the mode menu you can freely change between SQL and XQuery modes. The mode chosen will change the options in the query menu accordingly.
 
-The 4 functions are:
-	getCoauthors(String author, Connection conn)
-	getPaperMetadata(String title, Connection conn)
-	getJournalMetadata(String name, String year, String volume, String number, Connection conn)
-	getConferenceMetadata(String conf, String year, Connection conn)
-
-An example of each of these functions running are on lines 153-156 of DatabaseQueries.java and can be amended to whatever Author/Journal paper/Conference or commented out as needs require.
-
-
-# XQuerying the XML
-The relative filepaths of the Xqueries assume the fact you import the XMLParse project folder
-into your environment, NOT the entire SOSE_Projects folder.
-
-The 4 Xqueries can be found in publication.xqy and are called by running XQueryTester.java
-
-Running XQueryTester.java only runs one specific query, and the other 3 are commented out. You will need to comment out the query you ran and uncomment out the next one you want to run.
-
-For some of the queries, we look for $x in dblp/article or dblp/inproceedings. This will return the result for the query in that subsection of the dblp.
-If you want to run the query on all publications (articles AND inproceedings AND etc) simply just change the route on the query in the for statement and rerun it
-ex: for $x in doc("dblp-soc-papers.xml")/dblp/inproceedings
-Change to /dblp/article to run on articles instead of inproceedings
-etc.
-
-Query 1:
-We did not find any titles that strictly had the letters "SOSE" in them, so we ran our subject queries on "Software Engineering" instead. 
-You can easily change this 
-ex: where fn:contains($x/title, 'Software Engineering')
-Change 'Softare Engineering' to whatever you want to compare
-
-Query 2: Per seen above, to view all articles published by Jia Zhang in 2018, change the article route to inproceedings or vice versa.
-
-Query 3: We did not find any authors with > 10 publications, however this may be due to our query being faulty.
-
-Query 4: We declared a global variable $papername, you may change this to whatever paper name you want to run the query on (case sensitve, must be exact)
+**Note for the XQuery portion only 2 of the queries take an input. Those have a form that can be filled out for that information. The other two just dump the requested informtion to the Large white area**
 
 
 
