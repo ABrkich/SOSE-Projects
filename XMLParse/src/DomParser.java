@@ -13,6 +13,7 @@ import java.util.List;
 
 public class DomParser {
 
+  //Create unique identifiers for both the documents and the authors
   Integer authorId;
   Integer did;
   HashMap authors;
@@ -40,7 +41,7 @@ public class DomParser {
           NodeList childNodes = node.getChildNodes();
           for (int j = 0; j < childNodes.getLength(); j++) {
             Node cNode = childNodes.item(j);
-            // Identifying the child tag of employee encountered
+            // Identifying the child tag of each Inproceedings
             if (cNode instanceof Element) {
               String content = cNode.getLastChild().getTextContent().trim().replace("'","");
               switch (cNode.getNodeName()) {
@@ -90,10 +91,6 @@ public class DomParser {
           inpList.add(inp);
         }
       }
-
-
-      // Print the Employee list
-
       return inpList;
     } catch (Exception e) {
       e.printStackTrace();
@@ -116,14 +113,13 @@ public class DomParser {
       for (int i = 0; i < nodeList.getLength(); i++) {
         Node node = nodeList.item(i);
         if (node instanceof Element) {
-          // We have encountered an <employee> tag
           Proceedings proc = new Proceedings();
           proc.did = this.did.toString();
           this.did++;
           NodeList childNodes = node.getChildNodes();
           for (int j = 0; j < childNodes.getLength(); j++) {
             Node cNode = childNodes.item(j);
-            // Identifying the child tag of employee encountered
+            // Identifying the child tag of each Proceedings
             if (cNode instanceof Element) {
               String content = cNode.getLastChild().getTextContent().trim().replace("'","");
               switch (cNode.getNodeName()) {
@@ -182,7 +178,7 @@ public class DomParser {
           NodeList childNodes = node.getChildNodes();
           for (int j = 0; j < childNodes.getLength(); j++) {
             Node cNode = childNodes.item(j);
-            // Identifying the child tag of employee encountered
+            // Identifying the child tag of each Journal Article
             if (cNode instanceof Element) {
               String content = cNode.getLastChild().getTextContent().trim().replace("'","");
               switch (cNode.getNodeName()) {
@@ -236,8 +232,6 @@ public class DomParser {
         }
       }
 
-
-      // Print the Employee list
 
       return artList;
     } catch (Exception e) {

@@ -8,8 +8,12 @@ import java.util.ArrayList;
 public class Gui {
 
 
-    public static void sendButtonPressed(ArrayList<JTextField> tfs,JTextArea ta, String queryOption) throws SQLException, XQException {
 
+
+    public static void sendButtonPressed(ArrayList<JTextField> tfs,JTextArea ta, String queryOption) throws SQLException, XQException {
+        /*
+            Function to have the send button call the appropriate function to display the text in the GUI
+          */
 
         switch(queryOption){
             case "Coauthor Search":
@@ -55,7 +59,9 @@ public class Gui {
     }
 
     public static void resetButtonPressed(ArrayList<JTextField> tfs,JTextArea ta){
-
+        /*
+            Function to clear the fields and text area when the Reset button is pressed in the GUI
+         */
         for (JTextField tf: tfs){
             tf.setText("");
             tf.updateUI();
@@ -66,6 +72,12 @@ public class Gui {
     }
 
     public static void setQueryOptions(String queryOption,JPanel panel, JTextArea ta) throws SQLException, XQException {
+
+        /*
+            Create the desired layout for the GUI given on which query is submitted from the menu choice.
+            The Function removes the previous layout then applies the desired layout with the correct number of fields
+            labels and buttons pointed to the correct functions.
+         */
 
         ArrayList<JTextField> tfs = new ArrayList<JTextField>();
 
@@ -195,6 +207,11 @@ public class Gui {
 
                 break;
 
+            /*
+                For the Xquery 1 and XQuery 3 there are no parameters to pass through so the function is called as soon
+                as the menu item is selected and it is displayed in the text area on the GUI
+             */
+
             case "XQuery 1":
                 sendButtonPressed(tfs,ta,queryOption);
                 break;
@@ -269,7 +286,10 @@ public class Gui {
     }
 
     public static void modeSelected(JMenu m, String queryType) {
-        System.out.println(queryType);
+        /*
+            Changes the mode that the GUI is in switching the Queries menu to have either XQuery Options or SQL based
+            options. The text from here is sent to another function to get the desired layout for submission.
+         */
         switch(queryType){
             case "XQuery":
                 m.getItem(0).setText("XQuery 1");
@@ -345,6 +365,8 @@ public class Gui {
 
         ta.setEditable(false);
 
+        //Adding actions to each of the 4 menu buttons.
+
         m11.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -382,18 +404,6 @@ public class Gui {
             public void actionPerformed(ActionEvent e) {
                 try {
                     setQueryOptions(m14.getText(),panel,ta);
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                } catch (XQException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
-
-        m21.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    setQueryOptions(m21.getText(),panel,ta);
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 } catch (XQException ex) {

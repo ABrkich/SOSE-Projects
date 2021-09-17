@@ -31,6 +31,7 @@ public class DatabaseSubmission {
 
             Statement state = conn.createStatement();
 
+            //Submit Authors to the Author Table
             for (Object auth : DP.authors.keySet()){
                 String aid = DP.authors.get(auth).toString();
 
@@ -39,6 +40,7 @@ public class DatabaseSubmission {
                 state.execute(authSql);
             }
 
+            //Submit Publications to the papers table
             for (Article a : articles) {
                 String sql = "insert into CS7340_lab1.papers values ('" + a.did + "','" + a.title + "'," + "NULL" + ",'" + a.pages + "','" + a.year + "','" + a.url + "','" + a.ee.toString() + "'," + "NULL" + ",'" + a.journal + "','" + a.volume + "','" + a.number + "'," + "NULL" + "," + "NULL)";
                 System.out.println(sql);
