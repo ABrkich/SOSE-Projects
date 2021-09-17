@@ -31,9 +31,9 @@ After creating those three tables you can run DatabaseSubmission.java file locat
 
 # Running the GUI
 
-The GUI is located in the Java Class Gui.java. Running this will open a GUI with a large blank white space. At the top there are two menus. The left most menu is the Query menu which has all of the Queries for a given mode. Selecting a query will create a form on the bottom to fillout with the appropriate information. Clicking the send button will take the information from the form and send it to the selected query function which will call the SQL server. The output from the query will be posted on the GUI's large white space. 
+The GUI is located in the Java Class Gui.java. Running this will open a GUI with a large blank white space. At the top there are two menus. The left most menu is the Query menu which has all of the Queries for a given mode. Selecting a query will create a form on the bottom to fillout with the appropriate information. Clicking the send button will take the information from the form and send it to the selected query function which will call the SQL server or the XQuery Function. The output from the query will be posted on the GUI's large white space. 
 
 In the mode menu you can freely change between SQL and XQuery modes. The mode chosen will change the options in the query menu accordingly.
 
-**Note for the XQuery portion only 2 of the queries take an input. Those have a form that can be filled out for that information. The other two just dump the requested informtion to the Large white area**
+**Note for the XQuery portion only 2 of the queries take an input. Those have a form that can be filled out and submitted to the XQuery functions. The other two just dump the requested informtion to the text area**
 
