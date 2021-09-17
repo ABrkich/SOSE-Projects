@@ -28,7 +28,3 @@ The GUI is located in the Java Class Gui.java. Running this will open a GUI with
 In the mode menu you can freely change between SQL and XQuery modes. The mode chosen will change the options in the query menu accordingly.
 
 **Note for the XQuery portion only 2 of the queries take an input. Those have a form that can be filled out for that information. The other two just dump the requested informtion to the Large white area**
-
-
-
-
