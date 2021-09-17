@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.xml.xquery.XQException;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.SQLException;
@@ -7,7 +8,7 @@ import java.util.ArrayList;
 public class Gui {
 
 
-    public static void sendButtonPressed(ArrayList<JTextField> tfs,JTextArea ta, String queryOption) throws SQLException {
+    public static void sendButtonPressed(ArrayList<JTextField> tfs,JTextArea ta, String queryOption) throws SQLException, XQException {
 
 
         switch(queryOption){
@@ -15,14 +16,40 @@ public class Gui {
                 ta.setText(DatabaseQueries.getCoauthors(tfs.get(0).getText()));
                 ta.update(ta.getGraphics());
                 break;
+
             case "Paper Search":
                 ta.setText(DatabaseQueries.getPaperMetadata(tfs.get(0).getText()));
+                ta.update(ta.getGraphics());
                 break;
+
             case "Journal Search":
                 ta.setText(DatabaseQueries.getJournalMetadata(tfs.get(0).getText(),tfs.get(1).getText(),tfs.get(2).getText()));
-                break;
+                ta.update(ta.getGraphics());
+
             case "Conference Search":
                 ta.setText(DatabaseQueries.getConferenceMetadata(tfs.get(0).getText(),tfs.get(1).getText()));
+                ta.update(ta.getGraphics());
+                break;
+
+            case "XQuery 1":
+                ta.setText(XQueryTester.xQuery1());
+                ta.update(ta.getGraphics());
+                break;
+
+            case "XQuery 2":
+                ta.setText(XQueryTester.xQuery2(tfs.get(0).getText(),tfs.get(1).getText()));
+                ta.update(ta.getGraphics());
+                break;
+
+            case "XQuery 3":
+                ta.setText(XQueryTester.xQuery3());
+                ta.update(ta.getGraphics());
+                break;
+
+            case "XQuery 4":
+                ta.setText(XQueryTester.xQuery4(tfs.get(0).getText()));
+                ta.update(ta.getGraphics());
+                break;
         }
 
     }
@@ -38,7 +65,7 @@ public class Gui {
 
     }
 
-    public static void setQueryOptions(String queryOption,JPanel panel, JTextArea ta){
+    public static void setQueryOptions(String queryOption,JPanel panel, JTextArea ta) throws SQLException, XQException {
 
         ArrayList<JTextField> tfs = new ArrayList<JTextField>();
 
@@ -59,7 +86,7 @@ public class Gui {
                     public void actionPerformed(ActionEvent e){
                         try {
                             sendButtonPressed(tfs,ta,queryOption);
-                        } catch (SQLException ex) {
+                        } catch (SQLException | XQException ex) {
                             ex.printStackTrace();
                         }
                     }
@@ -87,7 +114,7 @@ public class Gui {
                     public void actionPerformed(ActionEvent e){
                         try {
                             sendButtonPressed(tfs,ta,queryOption);
-                        } catch (SQLException ex) {
+                        } catch (SQLException | XQException ex) {
                             ex.printStackTrace();
                         }
                     }
@@ -122,7 +149,7 @@ public class Gui {
                     public void actionPerformed(ActionEvent e){
                         try {
                             sendButtonPressed(tfs,ta,queryOption);
-                        } catch (SQLException ex) {
+                        } catch (SQLException | XQException ex) {
                             ex.printStackTrace();
                         }
                     }
@@ -154,7 +181,7 @@ public class Gui {
                     public void actionPerformed(ActionEvent e){
                         try {
                             sendButtonPressed(tfs,ta,queryOption);
-                        } catch (SQLException ex) {
+                        } catch (SQLException | XQException ex) {
                             ex.printStackTrace();
                         }
                     }
@@ -166,6 +193,72 @@ public class Gui {
                     }
                 });
 
+                break;
+
+            case "XQuery 1":
+                sendButtonPressed(tfs,ta,queryOption);
+                break;
+
+            case "XQuery 2":
+                JLabel xq2Authlabel = new JLabel("Author:");
+                JLabel xq2Yearlabel = new JLabel("Year:");
+                tfs.add(new JTextField(50));
+                tfs.add(new JTextField(4));
+                JButton xq2send = new JButton("Send");
+                JButton xq2reset = new JButton("Reset");
+                panel.add(xq2Authlabel);
+                panel.add(tfs.get(0));
+                panel.add(xq2Yearlabel);
+                panel.add(tfs.get(1));
+                panel.add(xq2send);
+                panel.add(xq2reset);
+
+                xq2send.addActionListener( new ActionListener(){
+                    public void actionPerformed(ActionEvent e){
+                        try {
+                            sendButtonPressed(tfs,ta,queryOption);
+                        } catch (SQLException | XQException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                });
+
+                xq2reset.addActionListener( new ActionListener(){
+                    public void actionPerformed(ActionEvent e){
+                        resetButtonPressed(tfs,ta);
+                    }
+                });
+                break;
+
+            case "XQuery 3":
+                sendButtonPressed(tfs,ta,queryOption);
+                break;
+
+            case "XQuery 4":
+                JLabel xq1label = new JLabel("Title");
+                tfs.add(new JTextField(50));
+                JButton xq1send = new JButton("Send");
+                JButton xq1reset = new JButton("Reset");
+                panel.add(xq1label);
+                panel.add(tfs.get(0));
+                panel.add(xq1send);
+                panel.add(xq1reset);
+
+                xq1send.addActionListener( new ActionListener(){
+                    public void actionPerformed(ActionEvent e){
+                        try {
+                            sendButtonPressed(tfs,ta,queryOption);
+                        } catch (SQLException | XQException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                });
+
+                xq1reset.addActionListener( new ActionListener(){
+                    public void actionPerformed(ActionEvent e){
+                        resetButtonPressed(tfs,ta);
+                    }
+                });
                 break;
         }
 
@@ -254,22 +347,58 @@ public class Gui {
 
         m11.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                setQueryOptions(m11.getText(),panel,ta);
+                try {
+                    setQueryOptions(m11.getText(),panel,ta);
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                } catch (XQException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
         m12.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                setQueryOptions(m12.getText(),panel,ta);
+                try {
+                    setQueryOptions(m12.getText(),panel,ta);
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                } catch (XQException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
         m13.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                setQueryOptions(m13.getText(),panel,ta);
+                try {
+                    setQueryOptions(m13.getText(),panel,ta);
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                } catch (XQException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
         m14.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                setQueryOptions(m14.getText(),panel,ta);
+                try {
+                    setQueryOptions(m14.getText(),panel,ta);
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                } catch (XQException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
+        m21.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    setQueryOptions(m21.getText(),panel,ta);
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                } catch (XQException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
 
