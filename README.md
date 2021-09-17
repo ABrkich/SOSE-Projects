@@ -1,6 +1,4 @@
-# SOSE-Projects
-Service Oriented Software Engineering Projects
-
+# Team 1 Project 
 # Brief Structure Overview
 
 For the pushing files to the Database there are classes for each Author, Article, Proceedings, and Inproceedings which capture the data for those documents. Each author is assigned an id number and each paper is as well. The authors are put into a hash and checked to see if they have already been assigned an id.
