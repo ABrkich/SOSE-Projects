@@ -28,7 +28,7 @@ public class XQueryTester {
     public static String xQuery1() throws XQException {
         //InputStream inputStream = new FileInputStream(new File("src/publications.xqy"));
 
-        String inputStream = "for $x in doc(\"dblp-soc-papers.xml\")/dblp/article\n" +
+        String inputStream = "for $x in doc(\"dblp-soc-papers.xml\")/dblp/*\n" +
                 "return $x/title";
 
         XQDataSource ds = new SaxonXQDataSource();
