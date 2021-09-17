@@ -1,6 +1,16 @@
 # SOSE-Projects
 Service Oriented Software Engineering Projects
 
+# Brief Structure Overview
+
+For the pushing files to the Database there are classes for each Author, Article, Proceedings, and Inproceedings which capture the data for those documents. Each author is assigned an id number and each paper is as well. The authors are put into a hash and checked to see if they have already been assigned an id.
+
+For calling SQL queries there is a DatabaseQueries file which has four functions each of which takes different variables to get the desired results from the query.
+
+For Xqueries there is the XQueryTester class which similarly has each of the four queries broken out into a seperate methods and take variables when necessary.
+
+The GUI class wraps up the XQuery and SQL classes to allow the user to input dynamic queries and recieve the out put to them.
+
 # Database Setup
 
 There is a mysqldump "cs7340_lab1_dbschema" that contains all of the information of all of the papers from "dblp-soc-papers.xml
@@ -28,3 +38,4 @@ The GUI is located in the Java Class Gui.java. Running this will open a GUI with
 In the mode menu you can freely change between SQL and XQuery modes. The mode chosen will change the options in the query menu accordingly.
 
 **Note for the XQuery portion only 2 of the queries take an input. Those have a form that can be filled out for that information. The other two just dump the requested informtion to the Large white area**
+
